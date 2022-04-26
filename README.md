@@ -11,7 +11,11 @@
  
 ### ・BurstCompilerを利用したので、ナビゲーション処理が高速化になる
 　    BurstCompilerとは：https://docs.unity3d.com/Packages/com.unity.burst@0.2-preview.20/manual/index.html
-
+      
+      ※ 自分検証した結果、利用しないより、処理速度が約5倍速くなる。
+      
+      
+      
 ```diff
 - BurstCompilerを利用するために、「Burst」パッケージが必要なので、
 - パッケージをプロジェクトに導入した後、NavigationSystem.csの24行目を有効にしてください。    
@@ -22,11 +26,17 @@
 ```
 
 ### ・ナビゲーションを利用するオブジェクトのサイズが任意に設定できる
+
+　「サイズ」パラメータをナビゲーション計算に組み込んで、すべてのオブジェクトがナビゲーションシステムに活用できる。
+
 ![Image](https://github.com/YuloongBY/BYImage/blob/main/JobBurstAStarNavigation/naviSize0.gif)
 ![Image](https://github.com/YuloongBY/BYImage/blob/main/JobBurstAStarNavigation/naviSize1.gif)
 ![Image](https://github.com/YuloongBY/BYImage/blob/main/JobBurstAStarNavigation/naviSize2.gif)
 
 ### ・ナビゲーションを利用するオブジェクトによって、障害物が別々設定できる
+
+　障害物情報をグリッド側からオブジェクト側が持つように変更、ナビゲーション計算する時、動的に差し替える。
+
 「灰色」が障害物になった場合　　　　　　　　　　
 
 ![Image](https://github.com/YuloongBY/BYImage/blob/main/JobBurstAStarNavigation/naviBlock0.gif)
@@ -53,15 +63,26 @@
   
 ### ・ユニットにウェイトが設定できる
 
-濃い青色ユニットにウェイトを付けたので、探索終点は真ん中の「水路」ところ以外の場合、「水路」に入れない。
+　ウェイト値をユニットのG値に加算した後、最終G値にとして計算する。
 
+濃い青色ユニットにウェイトを付けたので、探索終点は真ん中の「水路」ところ以外の場合、「水路」に入れない。
 ![Image](https://github.com/YuloongBY/BYImage/blob/main/JobBurstAStarNavigation/naviWeight.gif)
 
 ### ・複数グリッドの連続ナビゲーション処理を対応
+
+　複数グリッド利用する場合が使えるし、巨大グリッドを分割計算することもできる。
+
 ![Image](https://github.com/YuloongBY/BYImage/blob/main/JobBurstAStarNavigation/naviMulti.gif)
 
 ### ・探索終点まで行けない場合、最短経路が取得できる
+
+　終点まで行けない場合、計算されたユニット中にH値最小のユニットを終点にとして出力する。
+
 ![Image](https://github.com/YuloongBY/BYImage/blob/main/JobBurstAStarNavigation/naviDeadEnd.gif)
+
+### ・効率アップのため、無駄な計算しない
+　
+ 始点と終点の間に障害物があるかどうか事前に判断して、障害物ない場合、ナビゲーション処理を行わなく、始点と終点をこのまま結果にとして出力する。
 
 ### ・シングルトンでまとめ管理するので、使いやすくなる
  
