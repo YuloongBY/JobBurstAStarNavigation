@@ -66,6 +66,7 @@
 　ウェイト値をユニットのG値に加算した後、最終G値にとして計算する。
 
 濃い青色ユニットにウェイトを付けたので、探索終点は真ん中の「水路」ところ以外の場合、「水路」に入れない。
+
 ![Image](https://github.com/YuloongBY/BYImage/blob/main/JobBurstAStarNavigation/naviWeight.gif)
 
 ### ・複数グリッドの連続ナビゲーション処理を対応
